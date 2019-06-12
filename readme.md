@@ -5,8 +5,8 @@ has the following structure:
 
 | Source URL Title | Destination URL Title |
 |------------------|-----------------------|
-| /foo             | /bar                  |
-| /phi             | /pho                  |
+| foo              | bar                  |
+| phi              | pho                  |
 
 ## Installation
 
