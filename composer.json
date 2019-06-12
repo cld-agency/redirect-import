@@ -1,26 +1,32 @@
 {
     "name": "cld/redirect-import",
-    "description": "Imports Dolphiz re-directs.",
-    "type": "project",
+    "description": "Imports Dolphiq re-directs from a CSV file.",
+    "version": "1.0.0",
+    "type": "craft-plugin",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin"
+    ],
     "authors": [
         {
-            "name": "Dan Gates",
-            "email": "dan@cld.agency"
+            "name": "CLD",
+            "email": "dev@cldleverlittledesign.co.uk"
         }
     ],
     "require": {
-        "phpoffice/phpspreadsheet": "^1.6",
-        "league/climate": "^3.5",
-        "league/container": "^3.2",
-        "vlucas/phpdotenv": "^3.3",
+        "php": ">=7.1",
+        "craftcms/cms": "^3.1",
         "ramsey/uuid": "^3.8"
     },
     "autoload": {
-        "files": [
-            "src/Helpers/helpers.php"
-        ],
         "psr-4": {
             "CLD\\RedirectImport\\": "src/"
         }
+    },
+    "extra": {
+        "handle": "redirect-import",
+        "name": "Redirect Import"
     }
 }

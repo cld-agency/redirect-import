@@ -1,0 +1,66 @@
+{% extends '_layouts/cp' %}
+
+{# Crafts inbuilt form helpers. #}
+{% import '_includes/forms' as forms %}
+
+{# Specify the page title and force a full page form. #}
+{% set title = 'Redirect Import' | t('redirect-import') %}
+{% set fullPageForm = true %}
+
+{# Main page content, i.e. the upload form. #}
+{% block content %}
+    <p>{{ 'Import a CSV file of re-directs. Ensure the file is formatted as follows:' | t('redirect-import') }}</p>
+
+    <blockquote><pre><code>
+        {{ 'Source URL' | t('redirect-import') }},{{ 'Destination URL' | t('redirect-import') }}
+        foo,bar
+        fizz,buzz
+    </code></pre></blockquote>
+
+    {# Route requests to the plugin controller. #}
+    {{ forms.hidden({ name: 'action', value: 'redirect-import/cp/import' }) }}
+
+    {# Allow for a site to be selected in multisite environments. #}
+    {% set siteIds = craft.app.sites.getAllSiteIds() %}
+    {% if siteIds|length > 1 %}
+        {# Build options for the site select box. #}
+        {% set sites = {} %}
+        {% for siteId in siteIds %}
+            {# We can't use integers as keys as they'll not get retained, so
+                the first hash key will always be `0`, the second `1` and so on.
+
+                To get around this we prepend the key with an underscore and
+                the plugin will have to account for this when dealing with the
+                input later. #}
+            {% set key = '_' ~ siteId %}
+            {% set sites = sites|merge({
+                (key): craft.app.sites.getSiteById(siteId).name,
+            }) %}
+        {% endfor %}
+
+        {{ forms.selectField({
+            label: 'Site' | t,
+            name: 'siteId',
+            options: sites,
+            value: 1,
+            instructions: 'Re-directs will be applied to this site only.' | t('redirect-import'),
+        }) }}
+    {% else %}
+        {# If there's only one site just add that in as a hidden field. #}
+        {{ forms.hidden({ name: 'siteId', value: '_' ~ siteIds[0] }) }}
+    {% endif %}
+
+    {{ forms.fileField({
+        label: 'Redirect File' | t('redirect-import'),
+        name: 'redirect_file',
+        instructions: 'CSV file to import in the format described above.' | t('redirect-import')
+    }) }}
+{% endblock %}
+
+{# Adds the correct enctype for file uploads to the form. #}
+{% block mainFormAttributes %}{{ parent() }} enctype="multipart/form-data"{% endblock %}
+
+{# Submit button to appear in the usual Craft place. #}
+{% block actionButton %}
+    <input type="submit" class="btn submit" value="{{ 'Import' | t }}">
+{% endblock %}
