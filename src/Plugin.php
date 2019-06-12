@@ -2,31 +2,22 @@
 
 namespace CLD\RedirectImport;
 
-use craft\base\Plugin;
-
-class RedirectImport extends Plugin
+class Plugin extends \craft\base\Plugin
 {
     /**
-     * @var \League\Container\ContainerInterface
+     * @var bool
      */
-    private $container;
+    public $hasCpSection = true;
 
     /**
-     * Initialise the plugin.
+     * Configure the CP nav item.
+     *
+     * @return array
      */
-    public function init()
+    public function getCpNavItem(): array
     {
-        parent::init();
-
-        // Build the service container.
-        $this->container = new League\Container\Container;
-
-        // Work with spreadsheets.
-        $this->container->add('SpreadsheetReader', CLD\RedirectImport\Spreadsheet\PhpSpreadsheet::class);
-
-        // Work with Craft.
-        $this->container->add('Craft', CLD\RedirectImport\Craft\Database::class)
-            ->addArgument(new CLD\RedirectImport\Database\PDO)
-            ->addArgument(new CLD\RedirectImport\UUID\Ramsey);
+        $item         = parent::getCpNavItem();
+        $item['icon'] = __DIR__ . '/icon.svg';
+        return $item;
     }
 }

@@ -29,7 +29,7 @@ class Import
      * Let's get going.
      *
      * @return void
-     * @throws \ClinimedImport\Exceptions\NotFound
+     * @throws \CLD\RedirectImport\Exceptions\NotFound
      */
     public function init(): void
     {

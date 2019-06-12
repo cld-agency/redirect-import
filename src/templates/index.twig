@@ -1,0 +1,39 @@
+{% extends '_layouts/cp' %}
+
+{# Crafts inbuilt form helpers. #}
+{% import '_includes/forms' as forms %}
+
+{# Specify the page title and force a full page form. #}
+{% set title = 'Redirect Import' | t('redirect-import') %}
+{% set fullPageForm = true %}
+
+{# Main page content, i.e. the upload form. #}
+{% block content %}
+    <p>{{ 'Import a CSV file of re-directs. Ensure the file is formatted as follows:' | t('redirect-import') }}</p>
+
+    <blockquote style="padding-bottom:1em"><pre><code>
+        {{ 'Source URL' | t('redirect-import') }},{{ 'Destination URL' | t('redirect-import') }}
+        foo,bar
+        fizz,buzz
+    </code></pre></blockquote>
+
+    {{ forms.hidden({
+        name: 'action',
+        value: 'redirect-import/cp/import',
+    }) }}
+
+    {# TODO: Where appropriate - add a site picker. #}
+
+    {{ forms.file({
+        label: 'File'|t,
+        name: 'redirect_file',
+    }) }}
+{% endblock %}
+
+{# Adds the correct enctype for file uploads to the form. #}
+{% block mainFormAttributes %}{{ parent() }} enctype="multipart/form-data"{% endblock %}
+
+{# Submit button to appear in the usual Craft place. #}
+{% block actionButton %}
+    <input type="submit" class="btn submit" value="{{ 'Import' | t }}">
+{% endblock %}

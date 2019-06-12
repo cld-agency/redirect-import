@@ -16,14 +16,9 @@
         }
     ],
     "require": {
-        "phpoffice/phpspreadsheet": "^1.6",
-        "league/container": "^3.2",
         "ramsey/uuid": "^3.8"
     },
     "autoload": {
-        "files": [
-            "src/Helpers/helpers.php"
-        ],
         "psr-4": {
             "CLD\\RedirectImport\\": "src/"
         }
