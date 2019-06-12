@@ -2,9 +2,9 @@
 
 namespace CLD\RedirectImport\controllers;
 
-use craft\web\Controller;
-use craft\web\UploadedFile;
 use CLD\RedirectImport\Craft\Native;
+use CLD\RedirectImport\UUID\Ramsey;
+use craft\web\Controller;
 
 class CpController extends Controller
 {
@@ -20,11 +20,13 @@ class CpController extends Controller
      */
     public function actionImport(): void
     {
+        // Error check.
         if (empty($_FILES)
             or !file_exists($_FILES['redirect_file']['tmp_name'])
             or !is_uploaded_file($_FILES['redirect_file']['tmp_name'])
             or $_FILES['redirect_file']['error'] !== 0
             or !in_array($_FILES['redirect_file']['type'], $this->validMimeTypes)) {
+            \Craft::$app->session->setFlash('error', 'Invalid import request.');
             return;
         }
 
@@ -33,7 +35,7 @@ class CpController extends Controller
         array_shift($contents); // TODO: Allow first row being a heading row to be toggled.
 
         // Loop through and insert.
-        $craftConnection = new Native;
+        $craftConnection = new Native(new Ramsey);
         $insertions      = 0;
 
         foreach ($contents as $redirect) {
@@ -43,6 +45,6 @@ class CpController extends Controller
             $insertions++;
         }
 
-        // TODO: Add success message.
+        \Craft::$app->session->setFlash('notice', sprintf('Imported %d redirects.', $insertions));
     }
 }
