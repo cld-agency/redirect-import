@@ -37,10 +37,13 @@ class CpController extends Controller
         // Loop through and insert.
         $craftConnection = new Native(new Ramsey);
         $insertions      = 0;
+        $siteId          = intval(
+            str_replace('_', '', \Craft::$app->request->getBodyParam('siteId'))
+        );
 
         foreach ($contents as $redirect) {
             $elementId = $craftConnection->createElement();
-            $craftConnection->createSiteElement($elementId);
+            $craftConnection->createSiteElement($elementId, $siteId);
             $craftConnection->createRedirect($elementId, $redirect[0], $redirect[1]);
             $insertions++;
         }
