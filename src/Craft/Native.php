@@ -2,13 +2,12 @@
 
 namespace CLD\RedirectImport\Craft;
 
-use CLD\RedirectImport\Interfaces\Craft;
 use CLD\RedirectImport\Interfaces\UUID;
 
 /**
- * Implement the Craft interface with Craft's native methods.
+ * Inserts records into Craft's database.
  */
-class Native implements Craft
+class Native
 {
     /**
      * Undocumented function
