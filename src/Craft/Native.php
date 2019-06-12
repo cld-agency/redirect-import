@@ -10,7 +10,7 @@ use CLD\RedirectImport\Interfaces\UUID;
 class Native
 {
     /**
-     * @return \CLD\RedirectImport\Interfaces\UUID
+     * @var \CLD\RedirectImport\Interfaces\UUID
      */
     private $uuid;
 
