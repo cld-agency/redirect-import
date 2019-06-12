@@ -1,0 +1,26 @@
+{
+    "name": "cld/redirect-import",
+    "description": "Imports Dolphiz re-directs.",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Dan Gates",
+            "email": "dan@cld.agency"
+        }
+    ],
+    "require": {
+        "phpoffice/phpspreadsheet": "^1.6",
+        "league/climate": "^3.5",
+        "league/container": "^3.2",
+        "vlucas/phpdotenv": "^3.3",
+        "ramsey/uuid": "^3.8"
+    },
+    "autoload": {
+        "files": [
+            "src/Helpers/helpers.php"
+        ],
+        "psr-4": {
+            "CLD\\RedirectImport\\": "src/"
+        }
+    }
+}

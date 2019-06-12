@@ -1,0 +1,12 @@
+# Directories
+/.vscode
+/vendor
+
+# Files
+.DS_Store
+.env
+.phpunit.result.cache
+*.xlsx
+
+# Exceptions
+!.env.sample
