@@ -3,7 +3,6 @@
 namespace CLD\RedirectImport\controllers;
 
 use CLD\RedirectImport\Craft\Native;
-use CLD\RedirectImport\UUID\Ramsey;
 use craft\web\Controller;
 
 class CpController extends Controller
@@ -35,16 +34,14 @@ class CpController extends Controller
         array_shift($contents); // TODO: Allow first row being a heading row to be toggled.
 
         // Loop through and insert.
-        $craftConnection = new Native(new Ramsey);
+        $craftConnection = new Native;
         $insertions      = 0;
         $siteId          = intval(
             str_replace('_', '', \Craft::$app->request->getBodyParam('siteId'))
         );
 
         foreach ($contents as $redirect) {
-            $elementId = $craftConnection->createElement();
-            $craftConnection->createSiteElement($elementId, $siteId);
-            $craftConnection->createRedirect($elementId, $redirect[0], $redirect[1]);
+            $craftConnection->createRedirect($siteId, $redirect[0], $redirect[1]);
             $insertions++;
         }
 
